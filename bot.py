@@ -623,10 +623,10 @@ async def validator_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     try:
 
         async with aiohttp.ClientSession() as session:
-            async with session.get('http://localhost:{SERVER_PORT}/status') as resp:
+            async with session.get(f'http://localhost:{SERVER_PORT}/status') as resp:
                 status = await resp.json()
             
-            async with session.get('http://localhost:{SERVER_PORT}/validators') as resp:
+            async with session.get(f'http://localhost:{SERVER_PORT}/validators') as resp:
                 validators = await resp.json()
 
 
