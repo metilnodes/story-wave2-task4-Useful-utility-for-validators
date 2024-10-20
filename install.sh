@@ -46,7 +46,7 @@ installBot() {
 
     # Download the bot script
     echo -e "${YELLOW}Downloading the bot script...${NC}"
-    wget -O bot.py https://raw.githubusercontent.com/0xlimon/story-wave2-task4-Useful-utility-for-validators/refs/heads/main/bot.py
+    wget -O bot.py https://raw.githubusercontent.com/0xlimon/story-wave2-task4-Useful-utility-for-validators/main/bot.py
 
     # Create .env file
     echo -e "${GREEN}Creating .env file...${NC}"
