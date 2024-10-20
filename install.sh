@@ -124,7 +124,7 @@ uninstallBot() {
     rm /etc/systemd/system/story-telegram-bot.service
 
     # Remove the bot directory
-    rm -rf /opt/story-telegram-bot
+    rm -rf /root/story-telegram-bot
 
     # Reload systemd
     systemctl daemon-reload
