@@ -1,4 +1,3 @@
-
 import os
 import asyncio
 import aiohttp
@@ -629,70 +628,11 @@ async def validator_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             async with session.get(f'http://localhost:{SERVER_PORT}/validators') as resp:
                 validators = await resp.json()
 
-
-        try:
-            story_version_output = subprocess.check_output(["story", "version"], stderr=subprocess.STDOUT).decode().strip()
-            
-            story_version = {}
-            for line in story_version_output.split('\n'):
-                if "Version" in line:
-                    story_version['version'] = line.split()[1].strip()
-                elif "Git Commit" in line:
-                    story_version['git_commit'] = line.split()[2].strip()
-                elif "Git Timestamp" in line:
-                    story_version['timestamp'] = ' '.join(line.split()[2:]).strip()
-                    
-        except Exception as e:
-            logger.error(f"Error getting story version: {e}")
-            story_version = {
-                'version': 'Not available',
-                'git_commit': 'Not available',
-                'timestamp': 'Not available'
-            }
-
-
-        try:
-            geth_version_output = subprocess.check_output(["story-geth", "version"], stderr=subprocess.STDOUT).decode().strip()
-            
-            geth_version = {}
-            for line in geth_version_output.split('\n'):
-                if line.startswith("Version:"):
-                    geth_version['version'] = line.split(': ')[1].strip()
-                elif line.startswith("Git Commit:"):
-                    geth_version['git_commit'] = line.split(': ')[1].strip()
-                elif line.startswith("Git Commit Date:"):
-                    geth_version['git_date'] = line.split(': ')[1].strip()
-                elif line.startswith("Go Version:"):
-                    geth_version['go_version'] = line.split(': ')[1].strip()
-                elif line.startswith("Operating System:"):
-                    geth_version['os'] = line.split(': ')[1].strip()
-                    
-        except Exception as e:
-            logger.error(f"Error getting story-geth version: {e}")
-            geth_version = {
-                'version': 'Not available',
-                'git_commit': 'Not available',
-                'git_date': 'Not available',
-                'go_version': 'Not available',
-                'os': 'Not available'
-            }
-
         node_info = status['result']['node_info']
         sync_info = status['result']['sync_info']
         validator_info = status['result']['validator_info']
 
         message = "✅ Detailed Validator Information:\n\n"
-        message += f"Story Node Version:\n"
-        message += f"  Version: {story_version.get('version', 'Not available')}\n"
-        message += f"  Git Commit: {story_version.get('git_commit', 'Not available')}\n"
-        message += f"  Timestamp: {story_version.get('timestamp', 'Not available')}\n\n"
-        
-        message += f"Story-Geth Version:\n"
-        message += f"  Version: {geth_version.get('version', 'Not available')}\n"
-        message += f"  Git Commit: {geth_version.get('git_commit', 'Not available')}\n"
-        message += f"  Git Date: {geth_version.get('git_date', 'Not available')}\n"
-        message += f"  Go Version: {geth_version.get('go_version', 'Not available')}\n\n"
-        
         message += f"Network Info:\n"
         message += f"  Network: {node_info['network']}\n"
         message += f"  Moniker: {node_info['moniker']}\n\n"
